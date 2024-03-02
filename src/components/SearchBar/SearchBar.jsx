@@ -1,3 +1,4 @@
+import styles from "./SearchBar.module.css"
 const SearchBar = ({ onSubmit }) => {
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -6,7 +7,7 @@ const SearchBar = ({ onSubmit }) => {
 
   return (
     <>
-      <header>
+      <header className={styles.container}>
         <form onSubmit={handleSubmit}>
           <input
             type='text'

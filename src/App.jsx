@@ -3,11 +3,11 @@ import { ImageGallery } from "./components/ImageGallery/ImageGallery"
 import SearchBar from "./components/SearchBar/SearchBar"
 import { useState } from "react"
 import { imgApi } from "./imgSearchApi"
+import styles from "./App.module.css"
 
 function App() {
   const [query, setQuery] = useState("")
   const [resp, setResp] = useState([])
-  console.log(resp)
   const onSubmit = (value) => {
     setQuery(value)
   }
@@ -15,7 +15,7 @@ function App() {
   const fetchImeges = async () => {
     try {
       const { data } = await imgApi(query)
-      setResp(data)
+      setResp(data.results)
     } catch (error) {
       console.log(error)
     }
@@ -27,10 +27,10 @@ function App() {
   }, [query])
 
   return (
-    <>
+    <div>
       <SearchBar onSubmit={onSubmit} />
-      <ImageGallery item={resp} />
-    </>
+      {resp.length > 0 && <ImageGallery items={resp} />}
+    </div>
   )
 }
 

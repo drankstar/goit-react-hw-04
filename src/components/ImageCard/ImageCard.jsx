@@ -1,7 +1,8 @@
-const ImageCard = () => {
+import styles from "./ImageCard.module.css"
+const ImageCard = ({ item }) => {
   return (
-    <div>
-      <img src='' alt='' />
+    <div className={styles.card}>
+      <img className={styles.img} src={item.urls.small} alt={item.slug} />
     </div>
   )
 }
