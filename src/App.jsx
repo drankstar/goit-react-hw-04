@@ -4,9 +4,13 @@ import SearchBar from "./components/SearchBar/SearchBar"
 import { useState } from "react"
 import { imgApi } from "./imgSearchApi"
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn"
+import ErrorMessage from "./components/ErrorMessage/ErrorMessage"
+import Loader from "./components/Loader/Loader"
 
 function App() {
+  const [loading, setLoading] = useState(false)
   const [loadMore, setLoadMore] = useState(1)
+  const [error, setError] = useState(null)
   const [query, setQuery] = useState("")
   const [resp, setResp] = useState([])
   const onSubmit = (value) => {
@@ -16,10 +20,13 @@ function App() {
 
   const fetchImeges = async () => {
     try {
+      setLoading(true)
       const { data } = await imgApi(query, loadMore)
       setResp(data.results)
     } catch (error) {
-      console.log(error)
+      setError("Error fetching images. Please try again.")
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -36,7 +43,9 @@ function App() {
     <div>
       <SearchBar onSubmit={onSubmit} />
       <ImageGallery items={resp} />
+      {loading && <Loader />}
       {resp.length > 0 && <LoadMoreBtn click={handleLoadMore} />}
+      {error && <ErrorMessage message={error} />}
     </div>
   )
 }
