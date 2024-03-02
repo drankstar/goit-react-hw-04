@@ -25,7 +25,7 @@ function App() {
       const { data } = await imgApi(query, loadMore)
       setResp(data.results)
     } catch (error) {
-      setError("Error fetching images. Please try again.")
+      setError("Oops something wrong!!!. Please try again.")
     } finally {
       setLoading(false)
     }
