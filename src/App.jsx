@@ -13,6 +13,7 @@ function App() {
   const [error, setError] = useState(null)
   const [query, setQuery] = useState("")
   const [resp, setResp] = useState([])
+
   const onSubmit = (value) => {
     setQuery(value)
     setLoadMore(1)
