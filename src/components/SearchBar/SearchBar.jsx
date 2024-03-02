@@ -8,15 +8,18 @@ const SearchBar = ({ onSubmit }) => {
   return (
     <>
       <header className={styles.container}>
-        <form onSubmit={handleSubmit}>
+        <form className={styles.form} onSubmit={handleSubmit}>
           <input
+            className={styles.input}
             type='text'
             autoComplete='off'
             autoFocus
             placeholder='Search images and photos'
             name='query'
           />
-          <button type='submit'>Search</button>
+          <button className={styles.btn} type='submit'>
+            Search
+          </button>
         </form>
       </header>
     </>

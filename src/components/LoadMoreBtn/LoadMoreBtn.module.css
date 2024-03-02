@@ -1,0 +1,23 @@
+.loadMoreBtn {
+    color: aliceblue;
+    font-size: 18px;
+    border-radius: 6px;
+    background-color: #242424;
+    flex-direction: row;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px -5px 10px rgb(85, 27, 160);
+}
+
+
+.loadMoreBtn:hover {
+    color: #646cff;
+    border-color: #646cff;
+}
+
+.btnContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
