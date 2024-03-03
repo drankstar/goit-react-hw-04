@@ -6,6 +6,11 @@ import { imgApi } from "./imgSearchApi"
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn"
 import ErrorMessage from "./components/ErrorMessage/ErrorMessage"
 import Loader from "./components/Loader/Loader"
+import Modal from "react-modal"
+import ImageModal from "./components/ImageModal/ImageModal"
+import styles from "./App.module.css"
+
+Modal.setAppElement("#root")
 
 function App() {
   const [loading, setLoading] = useState(false)
@@ -13,20 +18,34 @@ function App() {
   const [error, setError] = useState(null)
   const [query, setQuery] = useState("")
   const [resp, setResp] = useState([])
+  const [modalIsOpen, setIsOpen] = useState(false)
+  const [currentImg, setCurrentImg] = useState(null)
+
+  function openModal(image) {
+    setCurrentImg(image)
+    setIsOpen(true)
+  }
+
+  function closeModal() {
+    setIsOpen(false)
+  }
 
   const onSubmit = (value) => {
+    setError("")
     setQuery(value)
     setResp([])
     setPage(1)
   }
 
-  const fetchImeges = async () => {
+  const fetchImeges = async (controller) => {
     try {
       setLoading(true)
-      const { data } = await imgApi(query, page)
+      const { data } = await imgApi({ query, page, controller })
       setResp((prev) => [...prev, ...data.results])
     } catch (error) {
-      setError("Oops something wrong!!!. Please try again.")
+      if (!controller?.signal?.aborted) {
+        setError("Oops something wrong!!!. Please try again.")
+      }
     } finally {
       setLoading(false)
     }
@@ -36,11 +55,12 @@ function App() {
     if (query === "") {
       return
     }
-    fetchImeges()
+    const controller = new AbortController()
+    fetchImeges(controller)
+    return () => controller.abort()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query, page])
 
-  console.log(resp)
   const handleLoadMore = () => {
     setPage(page + 1)
   }
@@ -48,10 +68,17 @@ function App() {
   return (
     <div>
       <SearchBar onSubmit={onSubmit} />
-      {resp.length > 0 && <ImageGallery items={resp} />}
+      {resp.length > 0 && <ImageGallery onOpen={openModal} items={resp} />}
       {loading && <Loader />}
       {resp.length > 0 && <LoadMoreBtn click={handleLoadMore} />}
       {error && <ErrorMessage message={error} />}
+      <Modal
+        className={styles.modal}
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+      >
+        <ImageModal image={currentImg} />
+      </Modal>
     </div>
   )
 }

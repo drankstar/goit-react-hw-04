@@ -1,9 +1,15 @@
 import styles from "./ImageCard.module.css"
 
-const ImageCard = ({ item }) => {
+const ImageCard = ({ onOpen, item }) => {
+  const handleClick = () => onOpen(item)
   return (
-    <div className={styles.card}>
-      <img className={styles.img} src={item.urls.small} alt={item.slug} />
+    <div>
+      <img
+        onClick={handleClick}
+        className={styles.img}
+        src={item.urls.small}
+        alt={item.slug}
+      />
     </div>
   )
 }

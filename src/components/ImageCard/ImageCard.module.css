@@ -1,11 +1,11 @@
-.card {
-    display: flex;
-    height: 100%;
-    flex-direction: column-reverse;
-    justify-content: space-evenly;
-
+.img {
+    object-fit: cover;
+    height: 200px;
+    display: block;
+    width: 300px;
 }
 
-.img {
-    width: 300px;
+.img:hover {
+    transform: scale(1.1);
+    box-shadow: -1px -3px 42px 4px rgb(85, 27, 160);
 }
