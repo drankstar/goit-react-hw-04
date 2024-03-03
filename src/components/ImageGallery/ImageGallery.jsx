@@ -1,7 +1,7 @@
 import ImageCard from "../ImageCard/ImageCard"
 import styles from "./ImageGallery.module.css"
 
-export const ImageGallery = ({ items }) => {
+const ImageGallery = ({ items }) => {
   return (
     <ul className={styles.listItems}>
       {items.map((item) => (
@@ -12,3 +12,5 @@ export const ImageGallery = ({ items }) => {
     </ul>
   )
 }
+
+export default ImageGallery
