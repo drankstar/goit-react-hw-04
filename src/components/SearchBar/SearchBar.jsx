@@ -4,10 +4,10 @@ import styles from "./SearchBar.module.css"
 const SearchBar = ({ onSubmit }) => {
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (e.target.elements.query.value === "") {
+    if (e.target.elements.query.value.trim() === "") {
       toast.error("Please enter a search word!")
     }
-    onSubmit(e.target.elements.query.value)
+    onSubmit(e.target.elements.query.value.trim())
   }
 
   return (
