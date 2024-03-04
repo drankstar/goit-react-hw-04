@@ -6,11 +6,8 @@ import { imgApi } from "./imgSearchApi"
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn"
 import ErrorMessage from "./components/ErrorMessage/ErrorMessage"
 import Loader from "./components/Loader/Loader"
-import Modal from "react-modal"
-import ImageModal from "./components/ImageModal/ImageModal"
-import styles from "./App.module.css"
 
-Modal.setAppElement("#root")
+import ImageModal from "./components/ImageModal/ImageModal"
 
 function App() {
   const [loading, setLoading] = useState(false)
@@ -72,13 +69,14 @@ function App() {
       {loading && <Loader />}
       {resp.length > 0 && <LoadMoreBtn click={handleLoadMore} />}
       {error && <ErrorMessage message={error} />}
-      <Modal
-        className={styles.modal}
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-      >
-        <ImageModal image={currentImg} />
-      </Modal>
+
+      {currentImg && (
+        <ImageModal
+          closeModal={closeModal}
+          isOpen={modalIsOpen}
+          image={currentImg}
+        />
+      )}
     </div>
   )
 }
